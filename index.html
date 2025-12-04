@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Commit Message Analyzer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔍 GitHub Commit Message Analyzer</h1>
+            <p class="subtitle">Analyze commit messages from any GitHub repository</p>
+            <div id="apiKeyIndicator" class="api-key-indicator hidden">
+                <span class="indicator-icon">🔑</span>
+                <span>API Key Active - Higher rate limits enabled</span>
+            </div>
+        </header>
+
+        <div class="input-section">
+            <div class="api-key-section">
+                <button id="toggleApiKey" class="btn-secondary">🔑 Add GitHub API Key (Optional)</button>
+                <div id="apiKeyContainer" class="api-key-container hidden">
+                    <input 
+                        type="password" 
+                        id="apiKeyInput" 
+                        placeholder="Enter your GitHub Personal Access Token"
+                        autocomplete="off"
+                    >
+                    <button id="clearApiKey" class="btn-clear" title="Clear API Key">🗑️</button>
+                    <a href="https://github.com/settings/tokens/new?scopes=repo&description=Commit%20Analyzer" 
+                       target="_blank" 
+                       class="api-key-help"
+                       title="Create a new token">
+                        ℹ️ How to get token
+                    </a>
+                    <div id="apiKeyStatus" class="api-key-status"></div>
+                </div>
+            </div>
+            <div class="input-group">
+                <input 
+                    type="text" 
+                    id="repoInput" 
+                    placeholder="Enter repository (e.g., facebook/react or https://github.com/facebook/react)"
+                    autocomplete="off"
+                >
+                <button id="analyzeBtn" class="btn-primary">Analyze</button>
+            </div>
+            <div id="errorMessage" class="error-message"></div>
+        </div>
+
+        <div id="loadingSection" class="loading-section hidden">
+            <div class="spinner"></div>
+            <p>Fetching commits from GitHub...</p>
+        </div>
+
+        <div id="resultsSection" class="results-section hidden">
+            <div class="repo-info">
+                <h2 id="repoName"></h2>
+                <p id="repoDescription" class="repo-description"></p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-value" id="totalCommits">0</div>
+                    <div class="stat-label">Total Commits</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📝</div>
+                    <div class="stat-value" id="avgLength">0</div>
+                    <div class="stat-label">Avg Message Length</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⭐</div>
+                    <div class="stat-value" id="qualityScore">0%</div>
+                    <div class="stat-label">Quality Score</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📅</div>
+                    <div class="stat-value" id="timeRange">-</div>
+                    <div class="stat-label">Time Range</div>
+                </div>
+            </div>
+
+            <div class="analysis-section">
+                <div class="analysis-card">
+                    <h3>📈 Commit Message Quality</h3>
+                    <div class="quality-breakdown">
+                        <div class="quality-item">
+                            <span class="quality-label">Conventional Format</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="conventionalProgress" style="width: 0%"></div>
+                            </div>
+                            <span class="quality-percent" id="conventionalPercent">0%</span>
+                        </div>
+                        <div class="quality-item">
+                            <span class="quality-label">Descriptive Messages</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="descriptiveProgress" style="width: 0%"></div>
+                            </div>
+                            <span class="quality-percent" id="descriptivePercent">0%</span>
+                        </div>
+                        <div class="quality-item">
+                            <span class="quality-label">No Merge Commits</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="noMergeProgress" style="width: 0%"></div>
+                            </div>
+                            <span class="quality-percent" id="noMergePercent">0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="analysis-card">
+                    <h3>🏷️ Commit Types</h3>
+                    <div id="commitTypes" class="commit-types"></div>
+                </div>
+            </div>
+
+            <div class="analysis-section">
+                <div class="analysis-card full-width">
+                    <h3>🔥 Most Common Words</h3>
+                    <div id="commonWords" class="common-words"></div>
+                </div>
+            </div>
+
+            <div class="analysis-section">
+                <div class="analysis-card full-width">
+                    <h3>📋 Recent Commit Messages</h3>
+                    <div id="recentCommits" class="recent-commits"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
