@@ -52,8 +52,8 @@ A beautiful, modern web application to analyze commit messages from any GitHub r
 
 1. **Clone or download this repository**
    ```bash
-   git clone <repository-url>
-   cd githubojt
+   git clone https://github.com/vikash7485/github-commit.git
+   cd github-commit
    ```
 
 2. **Open the application**
@@ -133,7 +133,7 @@ The quality score is calculated based on:
 ## 📁 Project Structure
 
 ```
-githubojt/
+github-commit/
 ├── index.html          # Main HTML file
 ├── styles.css          # Styling and layout
 ├── script.js           # Application logic
@@ -220,4 +220,3 @@ Potential features for future versions:
 ---
 
 **Made with ❤️ for developers who care about clean commit messages**
-
